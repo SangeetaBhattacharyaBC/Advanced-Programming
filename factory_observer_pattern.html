@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Factory & Observer Pattern Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+    body {
+      background-color: #121212;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.6;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.08);
+      padding: 20px;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(8px);
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.1);
+    }
+    pre {
+      background: #1a1a1a;
+      color: #9ef0ff;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.95rem;
+    }
+    h1, h2 {
+      background: linear-gradient(to right, #58caff, #e89aff);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-weight: bold;
+    }
+    .icon {
+      color: #58caff;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .icon:hover {
+      transform: rotate(15deg) scale(1.1);
+      color: #e89aff;
+    }
+    details {
+      margin-top: 10px;
+      border-left: 3px solid #58caff;
+      padding-left: 10px;
+    }
+    summary {
+      cursor: pointer;
+      color: #ffd166;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    summary:hover {
+      color: #8ef5c0;
+    }
+    .info-box {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+      color: #c0e8ff;
+    }
+  </style>
+</head>
+<body class="p-8">
+
+  <h1 class="text-4xl mb-6 text-center">🎓 Factory & Observer Pattern Demo</h1>
+  <p class="text-center text-lg mb-10 text-gray-300 max-w-2xl mx-auto">
+    Interactive, visually friendly demonstration of two essential design patterns — <strong>Factory</strong> for object creation, and <strong>Observer</strong> for event notification.
+  </p>
+
+  <!-- FACTORY PATTERN -->
+  <section class="mb-16">
+    <h2 class="text-3xl mb-6 flex items-center justify-center gap-2">
+      <i data-feather="settings" class="icon"></i> Factory Pattern (Object Creation)
+    </h2>
+    <div class="info-box text-center">
+      <p><strong>Explanation:</strong> The Factory Pattern lets you create objects without specifying their exact class.</p>
+      <p><strong>When to use:</strong> Use it when you have multiple related objects to create and you want to delegate the instantiation logic.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <!-- Scenario 1 -->
+      <div class="card">
+        <h3 class="text-xl font-semibold mb-3 text-cyan-300">🎨 Shape Creator</h3>
+        <p class="mb-3 text-gray-300">A drawing program uses a Shape Factory to create various shapes (Circle, Square, Triangle) on demand.</p>
+        <details>
+          <summary>Show Python Code</summary>
+          <pre>
+class Shape:
+    def draw(self):
+        pass
+
+class Circle(Shape):
+    def draw(self):
+        return "Drawing a Circle 🟢"
+
+class Square(Shape):
+    def draw(self):
+        return "Drawing a Square 🟦"
+
+class Triangle(Shape):
+    def draw(self):
+        return "Drawing a Triangle 🔺"
+
+class ShapeFactory:
+    def create_shape(self, shape_type):
+        if shape_type == "circle":
+            return Circle()
+        elif shape_type == "square":
+            return Square()
+        elif shape_type == "triangle":
+            return Triangle()
+
+factory = ShapeFactory()
+shape = factory.create_shape("circle")
+print(shape.draw())
+          </pre>
+        </details>
+      </div>
+
+      <!-- Scenario 2 -->
+      <div class="card">
+        <h3 class="text-xl font-semibold mb-3 text-cyan-300">🚗 Vehicle Factory</h3>
+        <p class="mb-3 text-gray-300">A transport system creates Cars, Bikes, or Trucks dynamically using a Vehicle Factory.</p>
+        <details>
+          <summary>Show Python Code</summary>
+          <pre>
+class Vehicle:
+    def start(self): pass
+
+class Car(Vehicle):
+    def start(self):
+        return "Car started 🚙"
+
+class Bike(Vehicle):
+    def start(self):
+        return "Bike started 🏍️"
+
+class Truck(Vehicle):
+    def start(self):
+        return "Truck started 🚚"
+
+class VehicleFactory:
+    def create_vehicle(self, type):
+        if type == "car": return Car()
+        elif type == "bike": return Bike()
+        elif type == "truck": return Truck()
+
+factory = VehicleFactory()
+vehicle = factory.create_vehicle("truck")
+print(vehicle.start())
+          </pre>
+        </details>
+      </div>
+
+      <!-- Scenario 3 -->
+      <div class="card">
+        <h3 class="text-xl font-semibold mb-3 text-cyan-300">☕ Coffee Machine Factory</h3>
+        <p class="mb-3 text-gray-300">A café system produces Espresso, Latte, or Cappuccino using a Coffee Factory.</p>
+        <details>
+          <summary>Show Python Code</summary>
+          <pre>
+class Coffee:
+    def serve(self): pass
+
+class Espresso(Coffee):
+    def serve(self):
+        return "Serving Espresso ☕"
+
+class Latte(Coffee):
+    def serve(self):
+        return "Serving Latte 🥛"
+
+class Cappuccino(Coffee):
+    def serve(self):
+        return "Serving Cappuccino ☕✨"
+
+class CoffeeFactory:
+    def create_coffee(self, coffee_type):
+        if coffee_type == "espresso": return Espresso()
+        elif coffee_type == "latte": return Latte()
+        elif coffee_type == "cappuccino": return Cappuccino()
+
+factory = CoffeeFactory()
+order = factory.create_coffee("latte")
+print(order.serve())
+          </pre>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- OBSERVER PATTERN -->
+  <section>
+    <h2 class="text-3xl mb-6 flex items-center justify-center gap-2">
+      <i data-feather="eye" class="icon"></i> Observer Pattern (Notification System)
+    </h2>
+    <div class="info-box text-center">
+      <p><strong>Explanation:</strong> The Observer Pattern allows multiple objects (observers) to get updates automatically when one object (subject) changes.</p>
+      <p><strong>When to use:</strong> Use it when changes to one object should automatically notify and update other dependent objects.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <!-- Scenario 1 -->
+      <div class="card">
+        <h3 class="text-xl font-semibold mb-3 text-pink-400">📢 Weather Station</h3>
+        <p class="mb-3 text-gray-300">Displays get automatic updates whenever the weather data changes.</p>
+        <details>
+          <summary>Show Python Code</summary>
+          <pre>
+class WeatherStation:
+    def __init__(self):
+        self.subscribers = []
+        self.temperature = 25
+
+    def subscribe(self, observer):
+        self.subscribers.append(observer)
+
+    def notify(self):
+        for sub in self.subscribers:
+            sub.update(self.temperature)
+
+    def set_temperature(self, temp):
+        self.temperature = temp
+        self.notify()
+
+class Display:
+    def update(self, temp):
+        print(f"Updated Display: Temperature is {temp}°C 🌤️")
+
+station = WeatherStation()
+display = Display()
+station.subscribe(display)
+station.set_temperature(30)
+          </pre>
+        </details>
+      </div>
+
+      <!-- Scenario 2 -->
+      <div class="card">
+        <h3 class="text-xl font-semibold mb-3 text-pink-400">💹 Stock Market Tracker</h3>
+        <p class="mb-3 text-gray-300">Investors get notified automatically when stock prices change.</p>
+        <details>
+          <summary>Show Python Code</summary>
+          <pre>
+class StockMarket:
+    def __init__(self):
+        self.investors = []
+        self.price = 100
+
+    def register(self, investor):
+        self.investors.append(investor)
+
+    def notify(self):
+        for inv in self.investors:
+            inv.update(self.price)
+
+    def set_price(self, new_price):
+        self.price = new_price
+        self.notify()
+
+class Investor:
+    def update(self, price):
+        print(f"Investor notified: New Stock Price = £{price}")
+
+market = StockMarket()
+investor = Investor()
+market.register(investor)
+market.set_price(120)
+          </pre>
+        </details>
+      </div>
+
+      <!-- Scenario 3 -->
+      <div class="card">
+        <h3 class="text-xl font-semibold mb-3 text-pink-400">📱 Chat App Notifications</h3>
+        <p class="mb-3 text-gray-300">Users receive instant alerts when a new message is posted.</p>
+        <details>
+          <summary>Show Python Code</summary>
+          <pre>
+class ChatGroup:
+    def __init__(self):
+        self.users = []
+
+    def join(self, user):
+        self.users.append(user)
+
+    def notify(self, message):
+        for user in self.users:
+            user.update(message)
+
+class User:
+    def update(self, message):
+        print(f"New message: {message} 💬")
+
+group = ChatGroup()
+u1 = User()
+group.join(u1)
+group.notify("Hello everyone!")
+          </pre>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <script> feather.replace(); </script>
+</body>
+</html>
