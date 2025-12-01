@@ -1,6 +1,7 @@
 import pandas as pd
 
 def calculate_average_heart_rate(df):
+    """Calculate average heart rate with error handling."""
     if df.empty:
         raise ValueError("Dataset is empty")
 
@@ -11,6 +12,7 @@ def calculate_average_heart_rate(df):
 
 
 def count_stress_labels(df):
+    """Count occurrences of each stress label."""
     if df.empty:
         raise ValueError("Dataset is empty")
 
@@ -18,6 +20,7 @@ def count_stress_labels(df):
 
 
 def average_session_duration(df):
+    """Calculate average session duration."""
     if df.empty:
         raise ValueError("Dataset is empty")
 
