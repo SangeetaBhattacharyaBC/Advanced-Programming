@@ -43,3 +43,19 @@ def test_valid_data(tmp_path):
     df = load_data(file)
     assert len(df) == 1
     assert df['heart_rate'].iloc[0] == 75
+
+def test_wrong_heart_rate_value(tmp_path):
+    file = tmp_path / "good2.csv"
+    df_in = pd.DataFrame({
+        "timestamp": ["2025-01-01"],
+        "heart_rate": [75],
+        "stress_label": ["normal"],
+        "session_duration": [40]
+    })
+    df_in.to_csv(file, index=False)
+
+    df = load_data(file)
+
+    # Fail on purpose (75 ≠ 100)
+    assert df['heart_rate'].iloc[0] == 100
+
