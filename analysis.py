@@ -3,10 +3,10 @@ import pandas as pd
 def calculate_average_heart_rate(df):
     """Calculate average heart rate with error handling."""
     if df.empty:
-        raise ValueError("Dataset is empty")
+        raise ValueError("Dataset is empty") /*An empty dataset means we cannot compute averages.*/
 
     if (df['heart_rate'] < 0).any():
-        raise ValueError("Negative heart rate detected")
+        raise ValueError("Negative heart rate detected") /*Heart rate cannot be negative → protects data integrity.*/
 
     return df['heart_rate'].mean()
 
@@ -25,6 +25,6 @@ def average_session_duration(df):
         raise ValueError("Dataset is empty")
 
     if (df['session_duration'] < 0).any():
-        raise ValueError("Negative session duration detected")
+        raise ValueError("Negative session duration detected") /*Session duration can’t be negative → ensures logical correctness.*/
 
     return df['session_duration'].mean()
