@@ -30,14 +30,26 @@ def process_user_data(user_id):
 # BASELINE: Sequential Processing
 # ---------------------------------------
 def sequential_processing(num_users):
-    start_time = time.time()
+
+    start_time = time.perf_counter()
 
     results = []
-    for user in range(num_users):
-        results.append(process_user_data(user))
 
-    end_time = time.time()
-    print(f"Sequential Time: {end_time - start_time:.3f} seconds")
+    for user in range(num_users):
+
+        results. append(
+            process_user_data(user)
+        )
+
+    end_time = time.perf_counter()
+
+    elapsed = end_time - start_time
+
+    print(
+        f"Sequential Time: "
+        f"{elapsed:.3f} seconds"
+    )
+
     return results
 
 
